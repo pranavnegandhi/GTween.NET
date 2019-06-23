@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.easings = new System.Windows.Forms.ComboBox();
             this.bitmapDisplay = new System.Windows.Forms.PictureBox();
             this.easerFunctions = new System.Windows.Forms.ComboBox();
+            this.bitmapDisplayActions = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.bitmapDisplay)).BeginInit();
+            this.bitmapDisplayActions.SuspendLayout();
             this.SuspendLayout();
             // 
             // easings
@@ -60,6 +64,20 @@
             this.easerFunctions.TabIndex = 2;
             this.easerFunctions.SelectedIndexChanged += new System.EventHandler(this.easerFunctions_SelectedIndexChanged);
             // 
+            // bitmapDisplayActions
+            // 
+            this.bitmapDisplayActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveImageToolStripMenuItem});
+            this.bitmapDisplayActions.Name = "contextMenuStrip1";
+            this.bitmapDisplayActions.Size = new System.Drawing.Size(153, 48);
+            // 
+            // saveImageToolStripMenuItem
+            // 
+            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveImageToolStripMenuItem.Text = "&Save Image...";
+            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -75,6 +93,7 @@
             this.Text = "GTween Easing Demos";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bitmapDisplay)).EndInit();
+            this.bitmapDisplayActions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -84,6 +103,8 @@
         private System.Windows.Forms.ComboBox easings;
         private System.Windows.Forms.PictureBox bitmapDisplay;
         private System.Windows.Forms.ComboBox easerFunctions;
+        private System.Windows.Forms.ContextMenuStrip bitmapDisplayActions;
+        private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
     }
 }
 

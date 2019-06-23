@@ -3,6 +3,8 @@ using GSkinner.Motion.Easing;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -37,7 +39,8 @@ namespace EasingDemos
                 gfx.FillRectangle(Brushes.Black, 0, 0, _bitmap.Width, _bitmap.Height);
             }
             bitmapDisplay.Image = _bitmap;
-            
+            bitmapDisplay.ContextMenuStrip = bitmapDisplayActions;
+
             var values = new Dictionary<string, double>() { { "X", _bitmap.Width - 1 } };
             _xTween = new GTween(_plotAt, 5, values)
             {
@@ -82,14 +85,15 @@ namespace EasingDemos
             {
                 gfx.FillRectangle(Brushes.Black, 0, 0, _bitmap.Width, _bitmap.Height);
             }
-            
+
             _plotFrom.X = _plotAt.X = 0;
             _plotFrom.Y = _plotAt.Y = 140;
 
             _xTween.Beginning();
             _yTween.Beginning();
-            _xTween.Paused = _yTween.Paused = false;
-            
+            _xTween.Paused = false;
+            _yTween.Paused = false;
+
             _yTween.Ease = easerFunctions.SelectedItem as GTween.Easer;
         }
 
@@ -116,6 +120,23 @@ namespace EasingDemos
         private void TweenCompleted(object sender, GTweenEventArgs e)
         {
             _xTween.Paused = _yTween.Paused = true;
+        }
+
+        private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialog = new SaveFileDialog();
+            dialog.Filter = "Portable Network Graphics|*.png";
+            if (dialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            var filepath = Path.GetExtension(dialog.FileName);
+            if (dialog.FileName != null)
+            {
+                var image = bitmapDisplay.Image;
+                image.Save(dialog.FileName, ImageFormat.Png);
+            }
         }
     }
 }
