@@ -7,56 +7,13 @@ using System.Threading;
 namespace GSkinner.Motion
 {
     /// <summary>
-    /// <para>GTween for .NET</para>
-    /// <para>This code is MIT licensed, see http://www.opensource.org/licenses/mit-license.php
-    /// Copyright (c) 2019 Pranav Negandhi (http://www.notadesigner.com)</para>
+    /// <para>GTween.NET</para>
+    /// <para>Based on GTween 2.01 for ActionScript 3 http://gskinner.com/libraries/gtween/</para>
+    /// <para>This code is MIT licensed, see http://www.opensource.org/licenses/mit-license.php</para>
+    /// <para>Copyright (c) 2019 Pranav Negandhi (http://www.notadesigner.com)</para>
     ///
-    /// <para>Based on GTween 2.01 for ActionScript 3
-    /// http://gskinner.com/libraries/gtween/
-    /// GTween 2.01 for ActionScript 3 is MIT licensed, see http://www.opensource.org/licenses/mit-license.php
-    /// Copyright(c) 2009 Grant Skinner</para>
-    ///
-    /// <para>Plugins, GTweenTimeline and proxy objects are not supported.</para>
-    ///
-    /// <para>Documentation is derived from GTween 2.01's original documentation.</para>
-    ///
-    /// <para>GTween is a light-weight instance oriented tween engine. This means that you instantiate tweens for specific purposes, and then reuse, update or discard them.
-    /// This is different than centralized tween engines where you "register" tweens with a global object. This provides a more familiar and useful interface
-    /// for object oriented programmers.</para>
-    ///
-    /// <para>GTween boasts a number of advanced features:</para>
-    /// <list type="bullet">
-    /// <item>
-    /// <description>frame and time based durations/positions which can be set per tween</description>
-    /// </item>
-    /// <item>
-    /// <description>simple sequenced tweens using .nextTween</description>
-    /// </item>
-    /// <item>
-    /// <description>pause and resume individual tweens or all tweens</description>
-    /// </item>
-    /// <item>
-    /// <description>jump directly to the end or beginning of a tween with :toEnd() or :toBeginning()</description>
-    /// </item>
-    /// <item>
-    /// <description>jump to any arbitrary point in the tween with :setPosition()</description>
-    /// </item>
-    /// <item>
-    /// <description>complete, init, and change callbacks</description>
-    /// </item>
-    /// <item>
-    /// <description>smart garbage collector interactions(prevents collection while active, allows collection if target is collected)</description>
-    /// </item>
-    /// <item>
-    /// <description>easy to set up in a single line of code</description>
-    /// </item>
-    /// <item>
-    /// <description>can repeat or reflect a tween a specified number of times</description>
-    /// </item>
-    /// <item>
-    /// <description>deterministic, so setting a position on a tween will(almost) always result in predictable results</description>
-    /// </item>
-    /// </list>
+    /// <para>GTween 2.01 for ActionScript 3 is MIT licensed, see http://www.opensource.org/licenses/mit-license.php</para>
+    /// <para>Copyright(c) 2009 Grant Skinner</para>
     /// </summary>
     public class GTween
     {
