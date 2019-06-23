@@ -92,6 +92,10 @@ namespace GSkinner.Motion
             }
         }
 
+        /// <summary>
+        /// Stops all tweens by cancelling the token used by the
+        /// frame animation thread.
+        /// </summary>
         public static void Destroy()
         {
             _cancelAnimation.Cancel();
