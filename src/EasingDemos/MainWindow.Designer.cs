@@ -30,6 +30,7 @@
         {
             this.easings = new System.Windows.Forms.ComboBox();
             this.bitmapDisplay = new System.Windows.Forms.PictureBox();
+            this.easerFunctions = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.bitmapDisplay)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,23 +45,33 @@
             // 
             // bitmapDisplay
             // 
-            this.bitmapDisplay.Location = new System.Drawing.Point(12, 39);
+            this.bitmapDisplay.Location = new System.Drawing.Point(12, 66);
             this.bitmapDisplay.Name = "bitmapDisplay";
-            this.bitmapDisplay.Size = new System.Drawing.Size(260, 210);
+            this.bitmapDisplay.Size = new System.Drawing.Size(260, 283);
             this.bitmapDisplay.TabIndex = 1;
             this.bitmapDisplay.TabStop = false;
             // 
-            // Form1
+            // easerFunctions
+            // 
+            this.easerFunctions.FormattingEnabled = true;
+            this.easerFunctions.Location = new System.Drawing.Point(12, 39);
+            this.easerFunctions.Name = "easerFunctions";
+            this.easerFunctions.Size = new System.Drawing.Size(260, 21);
+            this.easerFunctions.TabIndex = 2;
+            this.easerFunctions.SelectedIndexChanged += new System.EventHandler(this.easerFunctions_SelectedIndexChanged);
+            // 
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(284, 361);
+            this.Controls.Add(this.easerFunctions);
             this.Controls.Add(this.bitmapDisplay);
             this.Controls.Add(this.easings);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainWindow";
             this.Text = "GTween Easing Demos";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bitmapDisplay)).EndInit();
@@ -72,6 +83,7 @@
 
         private System.Windows.Forms.ComboBox easings;
         private System.Windows.Forms.PictureBox bitmapDisplay;
+        private System.Windows.Forms.ComboBox easerFunctions;
     }
 }
 
