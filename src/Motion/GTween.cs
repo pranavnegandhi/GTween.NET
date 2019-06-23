@@ -762,41 +762,20 @@ namespace GSkinner.Motion
 
         private void OnChange()
         {
-            var handler = Changed;
-
-            if (null == handler)
-            {
-                return;
-            }
-
             var args = new GTweenEventArgs(this);
-            handler(this, args);
+            Volatile.Read(ref Changed)?.Invoke(this, args);
         }
 
         private void OnComplete()
         {
-            var handler = Completed;
-
-            if (null == handler)
-            {
-                return;
-            }
-
             var args = new GTweenEventArgs(this);
-            handler(this, args);
+            Volatile.Read(ref Completed)?.Invoke(this, args);
         }
 
         private void OnInitialized()
         {
-            var handler = Initialized;
-
-            if (null == handler)
-            {
-                return;
-            }
-
             var args = new GTweenEventArgs(this);
-            handler(this, args);
+            Volatile.Read(ref Initialized)?.Invoke(this, args);
         }
     }
 }
