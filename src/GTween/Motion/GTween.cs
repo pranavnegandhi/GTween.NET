@@ -131,7 +131,7 @@ namespace GSkinner.Motion
         public double CalculatedPositionOld
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace GSkinner.Motion
                 {
                     if (DispatchEvents)
                     {
-                        OnChange();
+                        OnChanged();
                     }
                 }
 
@@ -390,7 +390,7 @@ namespace GSkinner.Motion
                     {
                         if (DispatchEvents)
                         {
-                            OnComplete();
+                            OnCompleted();
                         }
                     }
                 }
@@ -462,10 +462,6 @@ namespace GSkinner.Motion
             set;
         }
 
-        /// <summary>
-        /// Allows you to scale the passage of time for a tween. For example, a tween with a duration of 5 seconds, and a timeScale of 2 will complete in 2.5 seconds.
-        /// With a timeScale of 0.5 the same tween would complete in 10 seconds.
-        /// </summary>
         protected static double Time
         {
             get;
@@ -564,7 +560,7 @@ namespace GSkinner.Motion
         /// the returned object will not affect the tween.
         /// </summary>
         /// <returns></returns>
-        public object GetValues()
+        public IDictionary<string, double> GetValues()
         {
             return Copy(_values, new Dictionary<string, double>());
         }
@@ -618,7 +614,7 @@ namespace GSkinner.Motion
             _values = new Dictionary<string, double>();
             SetValues(values);
         }
-        
+
         /// <summary>
         /// Shorthand method for making multiple setProperty calls quickly.
         /// This adds the specified properties to the values list.Passing a
@@ -767,13 +763,14 @@ namespace GSkinner.Motion
         }
 
         #region EventDispatchers
-        private void OnChange()
+
+        private void OnChanged()
         {
             var args = new GTweenEventArgs(this);
             Volatile.Read(ref Changed)?.Invoke(this, args);
         }
 
-        private void OnComplete()
+        private void OnCompleted()
         {
             var args = new GTweenEventArgs(this);
             Volatile.Read(ref Completed)?.Invoke(this, args);
@@ -784,6 +781,7 @@ namespace GSkinner.Motion
             var args = new GTweenEventArgs(this);
             Volatile.Read(ref Initialized)?.Invoke(this, args);
         }
-        #endregion
+
+        #endregion EventDispatchers
     }
 }
