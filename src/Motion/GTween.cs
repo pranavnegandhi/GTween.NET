@@ -614,19 +614,7 @@ namespace GSkinner.Motion
             _values = new Dictionary<string, double>();
             SetValues(values);
         }
-
-        /// <summary>
-        /// Sets the numeric end value for a property on the target object that you would like to tween.
-        /// For example, if you wanted to tween to a new x position, you could use: myGTween.setValue("x",400).
-        /// </summary>
-        /// <param name="name">The name of the property to tween.</param>
-        /// <param name="value">The numeric end value(the value to tween to).</param>
-        public void SetValue(string name, double value)
-        {
-            _values[name] = value;
-            Invalidate();
-        }
-
+        
         /// <summary>
         /// Shorthand method for making multiple setProperty calls quickly.
         /// This adds the specified properties to the values list.Passing a
@@ -709,6 +697,12 @@ namespace GSkinner.Motion
             return destination;
         }
 
+        /// <summary>
+        /// Method that executes on the frame thread to update the
+        /// position of all tween instances on the timeline. This
+        /// mechanism replaces the frame-based timeline that is
+        /// provided by the Flash Player in ActionScript.
+        /// </summary>
         private static void AnimationFrameAction()
         {
             var mre = new ManualResetEvent(false);
@@ -737,15 +731,23 @@ namespace GSkinner.Motion
                     return i._paused;
                 });
 
+                // Pause the thread for 1/16 of a second to achieve 60 fps
                 mre.WaitOne(16);
             } while (!_cancelAnimation.Token.IsCancellationRequested);
         }
 
+        /// <summary>
+        /// Returns the number of milliseconds elapsed since the process was started.
+        /// </summary>
+        /// <returns></returns>
         private static double GetTimer()
         {
             return (DateTime.UtcNow - _processStartTime).TotalMilliseconds;
         }
 
+        /// <summary>
+        /// Resets the tween back to its original position.
+        /// </summary>
         private void Invalidate()
         {
             _initialized = false;
@@ -760,6 +762,7 @@ namespace GSkinner.Motion
             }
         }
 
+        #region EventDispatchers
         private void OnChange()
         {
             var args = new GTweenEventArgs(this);
@@ -777,5 +780,6 @@ namespace GSkinner.Motion
             var args = new GTweenEventArgs(this);
             Volatile.Read(ref Initialized)?.Invoke(this, args);
         }
+        #endregion
     }
 }
