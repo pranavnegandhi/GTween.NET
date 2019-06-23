@@ -154,3 +154,70 @@ Allows you to scale the passage of time for a tween. For example, a tween with a
 ### TimeScaleAll
 
 Sets the time scale for all tweens. For example to run all tweens at half speed, you can set `TimeScaleAll` to 0.5. It is multiplied against each tweens `TimeScale`. For example a tween with `TimeScale` set to 2 will play back at normal speed if `TimeScaleAll` is set to 0.5.
+
+## Methods
+
+### Beginning()
+
+Jumps the tween to its beginning and pauses it. This is the same as setting `Position` to 0 and `Paused` to true.
+
+### DeleteValue(string)
+
+Removes a end value from the tween. This prevents the GTween instance from tweening the property.
+
+### End()
+
+Jumps the tween to its end and pauses it. This is roughly the same as setting `Position` to `RepeatCount * Duration`.
+
+### GetInitValue(string)
+
+Returns the initial value for the specified property. Note that the value will not be available until the tween inits.
+
+### GetValue(string)
+
+Returns the end value for the specified property if one exists.
+
+### GetValues()
+
+Returns a dictionary of all end properties and their values. This is a copy of the internal dictionary of values, so modifying the returned object will not affect the tween.
+
+### Initialize()
+
+Reads all of the initial values from `Target` and calls the `InitializedHandler` callback. This is called automatically when a tween becomes active (finishes delaying) and when `SwapValues()` is called. It would rarely be used directly but is exposed for possible use by plugin developers or power users.
+
+### LinearEase(double, double, double, double)
+
+The default easing function used by GTween.
+
+### ResetValues(IDictionary<string, double>)
+
+Similar to `SetValues()`, but clears all previous end values before setting the new ones.
+
+### SetValues(IDictionary<string, double>)
+
+Shorthand method for making multiple `SetProperty` calls quickly. This adds the specified properties to the values list. Passing a property with a value of null will delete that value from the list.
+
+Example: set X and Y end values, delete Rotation
+
+```
+var values = new Dictionary<string, double() { { X = 200 }, { Y = 400 }, { Rotation = null } };
+tween.SetProperties(values);
+```
+
+### SwapValues()
+
+Swaps the init and end values for the tween, effectively reversing it. This should generally only be called before the tween starts playing. This will force the tween to init if it hasn't already done so, which may result in an InitializedHandler call.
+
+It will also force a render (so the target immediately jumps to the new values immediately) which will result in the ChangedHandler callback being called.
+
+The following example would tween the target from 100, 100 to its current position.
+
+```
+var values = new Dictionary<string, double() { { X = 100 }, { Y = 100 } };
+var tween = new GTween(ball, 2, values) { AutoPlay = false, Paused = true };
+tween.SwapValues();
+```
+
+### Copy(IDictionary<string, double>, IDictionary<string, double>, bool)
+
+Copies the key-value pairs from the first object to the second.
