@@ -58,7 +58,7 @@ namespace GSkinner.Motion
             DefaultDispatchEvents = false;
             DefaultEase = LinearEase;
             PauseAll = false;
-            Time = GetTimer();
+            Time = GetTimer() / 1000.0D;
             TimeScaleAll = 1.0;
 
             _frameThread = new Thread(AnimationFrameAction);
