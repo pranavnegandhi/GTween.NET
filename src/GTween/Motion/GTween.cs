@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace GSkinner.Motion
@@ -767,19 +768,31 @@ namespace GSkinner.Motion
         private void OnChanged()
         {
             var args = new GTweenEventArgs(this);
-            Volatile.Read(ref Changed)?.Invoke(this, args);
+            var handlers = Volatile.Read(ref Changed)?.GetInvocationList();
+            foreach (EventHandler<GTweenEventArgs> handler in handlers ?? Enumerable.Empty<Delegate>())
+            {
+                handler.BeginInvoke(this, args, null, null);
+            }
         }
 
         private void OnCompleted()
         {
             var args = new GTweenEventArgs(this);
-            Volatile.Read(ref Completed)?.Invoke(this, args);
+            var handlers = Volatile.Read(ref Completed)?.GetInvocationList();
+            foreach (EventHandler<GTweenEventArgs> handler in handlers ?? Enumerable.Empty<Delegate>())
+            {
+                handler.BeginInvoke(this, args, null, null);
+            }
         }
 
         private void OnInitialized()
         {
             var args = new GTweenEventArgs(this);
-            Volatile.Read(ref Initialized)?.Invoke(this, args);
+            var handlers = Volatile.Read(ref Initialized)?.GetInvocationList();
+            foreach (EventHandler<GTweenEventArgs> handler in handlers ?? Enumerable.Empty<Delegate>())
+            {
+                handler.BeginInvoke(this, args, null, null);
+            }
         }
 
         #endregion EventDispatchers
