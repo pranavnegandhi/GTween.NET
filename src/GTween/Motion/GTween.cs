@@ -36,7 +36,7 @@ namespace GSkinner.Motion
 
         private double _delay;
 
-        private bool _paused;
+        private bool _paused = true;
 
         private double _position;
 
@@ -81,11 +81,6 @@ namespace GSkinner.Motion
             Target = target;
             Duration = duration;
 
-            AutoPlay = true;
-            _paused = true;
-            RepeatCount = 1;
-            TimeScale = 1;
-
             ResetValues(values);
 
             if (Duration == 0 && Delay == 0 && AutoPlay)
@@ -111,7 +106,7 @@ namespace GSkinner.Motion
         {
             get;
             set;
-        }
+        } = true;
 
         /// <summary>
         /// The current calculated position of the tween.
@@ -442,7 +437,7 @@ namespace GSkinner.Motion
         {
             get;
             set;
-        }
+        } = 1;
 
         /// <summary>
         /// If true, events/callbacks will not be called. As well as allowing for more
@@ -478,7 +473,7 @@ namespace GSkinner.Motion
         {
             get;
             set;
-        }
+        } = 1;
 
         /// <summary>
         /// Sets the time scale for all tweens. For example to run all tweens at half speed,
