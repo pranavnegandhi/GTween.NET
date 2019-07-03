@@ -63,6 +63,7 @@ namespace GSkinner.Motion
             TimeScaleAll = 1.0;
 
             _frameThread = new Thread(AnimationFrameAction);
+            _frameThread.Name = "frameRefresh";
             _frameThread.IsBackground = true;
             _frameThread.Start();
         }
