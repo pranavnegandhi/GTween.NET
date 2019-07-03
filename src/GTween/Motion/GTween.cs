@@ -42,7 +42,7 @@ namespace GSkinner.Motion
 
         private static Thread _frameThread;
 
-        private static HashSet<GTween> _instances = new HashSet<GTween>();
+        private static IList<GTween> _instances = new List<GTween>(255);
 
         private static readonly object _instancesPadlock = new { };
 
@@ -717,16 +717,18 @@ namespace GSkinner.Motion
                 var dt = (Time - t) * TimeScaleAll;
                 lock (_instancesPadlock)
                 {
-                    foreach (var tween in _instances)
+                    var count = _instances.Count;
+                    for (var i = count - 1; i >= 0; i--)
                     {
+                        var tween = _instances[i];
                         tween.Position = tween._position + dt * tween.TimeScale;
+
+                        if (tween._paused)
+                        {
+                            _instances.RemoveAt(i);
+                        }
                     }
                 }
-
-                _instances.RemoveWhere(i =>
-                {
-                    return i._paused;
-                });
 
                 // Pause the thread for 1/16 of a second to achieve 60 fps
                 mre.WaitOne(16);
