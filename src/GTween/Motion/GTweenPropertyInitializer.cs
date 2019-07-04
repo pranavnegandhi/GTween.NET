@@ -21,12 +21,6 @@ namespace GSkinner.Motion
             get;
             set;
         } = false;
-
-        public double Duration
-        {
-            get;
-            set;
-        } = 0;
         
         public bool Paused
         {
