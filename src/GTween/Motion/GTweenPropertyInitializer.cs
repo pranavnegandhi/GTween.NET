@@ -34,11 +34,11 @@ namespace GSkinner.Motion
             set;
         } = true;
 
-        public double Position
+        public double? Position
         {
             get;
             set;
-        } = 0;
+        } = null;
 
         public bool Reflect
         {

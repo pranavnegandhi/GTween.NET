@@ -82,7 +82,7 @@ namespace GSkinner.Motion
             Delay = initializer?.Delay ?? 0;
             DispatchEvents = initializer?.DispatchEvents ?? DefaultDispatchEvents;
             Paused = initializer?.Paused ?? false;
-            Position = initializer?.Position ?? 0;
+            Position = initializer?.Position ?? Position;
             Reflect = initializer?.Reflect ?? false;
             RepeatCount = initializer?.RepeatCount ?? 1;
             SuppressEvents = initializer?.SuppressEvents ?? !DefaultDispatchEvents;
