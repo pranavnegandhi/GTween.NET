@@ -56,11 +56,8 @@ namespace GSkinner.Motion
 
         static GTween()
         {
-            DefaultDispatchEvents = false;
-            DefaultEase = LinearEase;
             PauseAll = false;
             Time = GetTimer() / 1000.0D;
-            TimeScaleAll = 1.0;
 
             _frameThread = new Thread(AnimationFrameAction);
             _frameThread.Name = "frameRefresh";
@@ -76,7 +73,6 @@ namespace GSkinner.Motion
         /// <param name="values">An object containing end property values.For example, to tween to x = 100, y= 100, you could pass { x: 100, y: 100} as the values object.</param>
         public GTween(object target = null, double duration = 1.0, IDictionary<string, double> values = null, GTweenPropertyInitializer initializer = null)
         {
-            DispatchEvents = DefaultDispatchEvents;
             Ease = DefaultEase;
             Target = target;
             Duration = duration;
@@ -84,12 +80,12 @@ namespace GSkinner.Motion
             AutoPlay = initializer?.AutoPlay ?? true;
             Data = initializer?.Data ?? null;
             Delay = initializer?.Delay ?? 0;
-            DispatchEvents = initializer?.DispatchEvents ?? false;
+            DispatchEvents = initializer?.DispatchEvents ?? DefaultDispatchEvents;
             Paused = initializer?.Paused ?? false;
             Position = initializer?.Position ?? 0;
             Reflect = initializer?.Reflect ?? false;
-            RepeatCount = initializer?.RepeatCount ?? 0;
-            SuppressEvents = initializer?.SuppressEvents ?? true;
+            RepeatCount = initializer?.RepeatCount ?? 1;
+            SuppressEvents = initializer?.SuppressEvents ?? !DefaultDispatchEvents;
             TimeScale = initializer?.TimeScale ?? 1;
 
             ResetValues(values);
@@ -158,7 +154,7 @@ namespace GSkinner.Motion
         {
             get;
             set;
-        }
+        } = false;
 
         /// <summary>
         /// Specifies the default easing function to use with new tweens. Set to GTween.linearEase by default.
@@ -167,7 +163,7 @@ namespace GSkinner.Motion
         {
             get;
             set;
-        }
+        } = LinearEase;
 
         /// <summary>
         /// The length of the delay in frames or seconds (depending on <code>.useFrames</code>).
@@ -495,7 +491,7 @@ namespace GSkinner.Motion
         {
             get;
             set;
-        }
+        } = 1.0d;
 
         /// <summary>
         /// Indicates the version number for this build.The numeric value will always
