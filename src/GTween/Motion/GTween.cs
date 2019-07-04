@@ -74,12 +74,23 @@ namespace GSkinner.Motion
         /// <param name="target">The object whose properties will be tweened.Defaults to null.</param>
         /// <param name="duration">The length of the tween in frames or seconds depending on the timingMode.Defaults to 1.</param>
         /// <param name="values">An object containing end property values.For example, to tween to x = 100, y= 100, you could pass { x: 100, y: 100} as the values object.</param>
-        public GTween(object target = null, double duration = 1.0, IDictionary<string, double> values = null)
+        public GTween(object target = null, double duration = 1.0, IDictionary<string, double> values = null, GTweenPropertyInitializer initializer = null)
         {
             DispatchEvents = DefaultDispatchEvents;
             Ease = DefaultEase;
             Target = target;
             Duration = duration;
+
+            AutoPlay = initializer?.AutoPlay ?? true;
+            Delay = initializer?.Delay ?? 0;
+            DispatchEvents = initializer?.DispatchEvents ?? false;
+            Duration = initializer?.Duration ?? 0;
+            Paused = initializer?.Paused ?? false;
+            Position = initializer?.Position ?? 0;
+            Reflect = initializer?.Reflect ?? false;
+            RepeatCount = initializer?.RepeatCount ?? 0;
+            SuppressEvents = initializer?.SuppressEvents ?? true;
+            TimeScale = initializer?.TimeScale ?? 1;
 
             ResetValues(values);
 
@@ -721,12 +732,12 @@ namespace GSkinner.Motion
                     for (var i = count - 1; i >= 0; i--)
                     {
                         var tween = _instances[i];
-                        tween.Position = tween._position + dt * tween.TimeScale;
-
                         if (tween._paused)
                         {
                             _instances.RemoveAt(i);
                         }
+
+                        tween.Position = tween._position + dt * tween.TimeScale;
                     }
                 }
 

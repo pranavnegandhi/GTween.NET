@@ -47,6 +47,7 @@
     <Compile Include="Motion\Easing\Sine.cs" />
     <Compile Include="Motion\GTween.cs" />
     <Compile Include="Motion\GTweenEventArgs.cs" />
+    <Compile Include="Motion\GTweenPropertyInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
