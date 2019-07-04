@@ -10,6 +10,12 @@ namespace GSkinner.Motion
             set;
         } = true;
         
+        public object Data
+        {
+            get;
+            set;
+        }
+
         public double Delay
         {
             get;

@@ -82,6 +82,7 @@ namespace GSkinner.Motion
             Duration = duration;
 
             AutoPlay = initializer?.AutoPlay ?? true;
+            Data = initializer?.Data ?? null;
             Delay = initializer?.Delay ?? 0;
             DispatchEvents = initializer?.DispatchEvents ?? false;
             Paused = initializer?.Paused ?? false;
