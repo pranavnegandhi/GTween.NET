@@ -577,5 +577,54 @@ namespace GSkinner.Tests
 
             Assert.AreEqual(tween.RepeatCount, counter);
         }
+
+        /// <summary>
+        /// The value of SupressEvents is set to false by default.
+        /// </summary>
+        [TestMethod]
+        public void TestSupressEventsDisabled()
+        {
+            var tween = new GTween(_target, TweenDuration, _values);
+            tween.SuppressEvents = true;
+
+            var eventFired = false;
+            var reset = new AutoResetEvent(false);
+            EventHandler<GTweenEventArgs> handler = (s, e) =>
+            {
+                eventFired = true;
+                reset.Set();
+            };
+            tween.Completed += handler;
+            tween.Paused = false;
+            reset.WaitOne(WaitDuration);
+            tween.Completed -= handler;
+
+            Assert.IsFalse(eventFired);
+        }
+
+        /// <summary>
+        /// Explicitly change the value of SupressEvents to false.
+        /// </summary>
+        [TestMethod]
+        public void TestSupressEventsEnabled()
+        {
+            var tween = new GTween(_target, TweenDuration, _values);
+            tween.DispatchEvents = true;
+            tween.SuppressEvents = false;
+
+            var eventFired = false;
+            var reset = new AutoResetEvent(false);
+            EventHandler<GTweenEventArgs> handler = (s, e) =>
+            {
+                eventFired = true;
+                reset.Set();
+            };
+            tween.Completed += handler;
+            tween.Paused = false;
+            reset.WaitOne(WaitDuration);
+            tween.Completed -= handler;
+
+            Assert.IsTrue(eventFired);
+        }
     }
 }
