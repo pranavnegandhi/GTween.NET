@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasingDemos", "EasingDemos\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTween", "GTween\GTween.csproj", "{5E6EBB2B-FC46-44E8-8EC9-DCC5DB8DD3C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTweenUnitTests", "GTweenUnitTests\GTweenUnitTests.csproj", "{84AA6222-EB25-451E-AE16-96150EDE7F8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5E6EBB2B-FC46-44E8-8EC9-DCC5DB8DD3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E6EBB2B-FC46-44E8-8EC9-DCC5DB8DD3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E6EBB2B-FC46-44E8-8EC9-DCC5DB8DD3C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84AA6222-EB25-451E-AE16-96150EDE7F8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84AA6222-EB25-451E-AE16-96150EDE7F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84AA6222-EB25-451E-AE16-96150EDE7F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84AA6222-EB25-451E-AE16-96150EDE7F8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
