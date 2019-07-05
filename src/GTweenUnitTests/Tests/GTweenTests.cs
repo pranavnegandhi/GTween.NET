@@ -501,5 +501,81 @@ namespace GSkinner.Tests
 
             Assert.AreEqual(firstPosition, secondPosition);
         }
+
+        [TestMethod]
+        public void TestPosition()
+        {
+            var tween = new GTween(_target, TweenDuration, _values);
+            tween.Paused = true;
+            var position = 5d;
+            tween.Position = 5d;
+
+            Assert.AreEqual(position, tween.Position);
+        }
+
+        [TestMethod]
+        public void TestReflect()
+        {
+            var initializer = new GTweenPropertyInitializer();
+            initializer.AutoPlay = false;
+            initializer.DispatchEvents = true;
+            initializer.SuppressEvents = false;
+            initializer.Reflect = true;
+            initializer.RepeatCount = 2;
+
+            var tween = new GTween(_target, TweenDuration, _values, initializer);
+            var initValue = _target.Value;
+            var midAchieved = false;
+            var endAchieved = false;
+
+            var reset = new AutoResetEvent(false);
+            EventHandler<GTweenEventArgs> handler = (s, e) =>
+            {
+                if (Math.Ceiling(_target.Value) == _values["Value"])
+                {
+                    midAchieved = true;
+                }
+
+                endAchieved = midAchieved && _target.Value == initValue;
+            };
+
+            tween.Changed += handler;
+            tween.Paused = false;
+            reset.WaitOne(WaitDuration << 1);
+            tween.Changed -= handler;
+
+            Assert.IsTrue(midAchieved);
+            Assert.IsTrue(endAchieved);
+        }
+
+        [TestMethod]
+        public void TestRepeat()
+        {
+            var initializer = new GTweenPropertyInitializer();
+            initializer.AutoPlay = false;
+            initializer.DispatchEvents = true;
+            initializer.SuppressEvents = false;
+            initializer.RepeatCount = 2;
+
+            var tween = new GTween(_target, TweenDuration, _values, initializer);
+
+            var counter = 0;
+            var reset = new AutoResetEvent(false);
+            EventHandler<GTweenEventArgs> handler = (s, e) =>
+            {
+                counter++;
+
+                if (tween.RepeatCount == counter)
+                {
+                    reset.Set();
+                }
+            };
+            tween.Completed += handler;
+            tween.Paused = false;
+            reset.WaitOne(WaitDuration << 1);
+            tween.Completed -= handler;
+
+            Assert.AreEqual(tween.RepeatCount, counter);
+        }
     }
 }
