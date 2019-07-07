@@ -41,6 +41,12 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoadTestingWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadTestingWindow.Designer.cs">
+      <DependentUpon>LoadTestingWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -50,6 +56,9 @@
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="LoadTestingWindow.resx">
+      <DependentUpon>LoadTestingWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
