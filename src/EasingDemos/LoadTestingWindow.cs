@@ -50,8 +50,7 @@ namespace EasingDemos
                 var initializer = new GTweenPropertyInitializer()
                 {
                     AutoPlay = false,
-                    DispatchEvents = true,
-                    SuppressEvents = false
+                    DispatchEvents = true
                 };
 
                 var target = new Point(0, i * 10);

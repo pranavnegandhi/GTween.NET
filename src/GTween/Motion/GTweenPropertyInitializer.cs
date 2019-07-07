@@ -1,6 +1,4 @@
-﻿using static GSkinner.Motion.GTween;
-
-namespace GSkinner.Motion
+﻿namespace GSkinner.Motion
 {
     public class GTweenPropertyInitializer
     {
@@ -9,7 +7,7 @@ namespace GSkinner.Motion
             get;
             set;
         } = true;
-        
+
         public object Data
         {
             get;
@@ -21,13 +19,13 @@ namespace GSkinner.Motion
             get;
             set;
         } = 0;
-        
+
         public bool DispatchEvents
         {
             get;
             set;
         } = false;
-        
+
         public bool Paused
         {
             get;
@@ -51,12 +49,6 @@ namespace GSkinner.Motion
             get;
             set;
         } = 1;
-
-        public bool SuppressEvents
-        {
-            get;
-            set;
-        } = true;
 
         public double TimeScale
         {

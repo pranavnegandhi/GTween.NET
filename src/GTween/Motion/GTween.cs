@@ -89,7 +89,6 @@ namespace GSkinner.Motion
             Position = initializer?.Position ?? Position;
             Reflect = initializer?.Reflect ?? false;
             RepeatCount = initializer?.RepeatCount ?? 1;
-            SuppressEvents = initializer?.SuppressEvents ?? !DefaultDispatchEvents;
             TimeScale = initializer?.TimeScale ?? 1;
 
             ResetValues(values);
@@ -406,12 +405,9 @@ namespace GSkinner.Motion
                         }
                 }
 
-                if (!SuppressEvents)
+                if (DispatchEvents)
                 {
-                    if (DispatchEvents)
-                    {
-                        OnChanged();
-                    }
+                    OnChanged();
                 }
 
                 if (end)
@@ -422,12 +418,9 @@ namespace GSkinner.Motion
                         NextTween.Paused = false;
                     }
 
-                    if (!SuppressEvents)
+                    if (DispatchEvents)
                     {
-                        if (DispatchEvents)
-                        {
-                            OnCompleted();
-                        }
+                        OnCompleted();
                     }
                 }
             }
@@ -477,17 +470,6 @@ namespace GSkinner.Motion
             get;
             set;
         } = 1;
-
-        /// <summary>
-        /// If true, events/callbacks will not be called. As well as allowing for more
-        /// control over events, and providing flexibility for extension, this results
-        /// in a slight performance increase, particularly if useCallbacks is false.
-        /// </summary>
-        public bool SuppressEvents
-        {
-            get;
-            set;
-        }
 
         /// <summary>
         /// The target object to tween. This can be any kind of object. You can retarget a tween at any time, but changing the target in mid-tween may result in unusual behaviour.
@@ -618,12 +600,9 @@ namespace GSkinner.Motion
                 _rangeValues[item.Key] = _values[item.Key] - (_initValues[item.Key] = Target.GetValue<double>(item.Key));
             }
 
-            if (!SuppressEvents)
+            if (DispatchEvents)
             {
-                if (DispatchEvents)
-                {
-                    OnInitialized();
-                }
+                OnInitialized();
             }
         }
 

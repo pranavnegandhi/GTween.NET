@@ -32,8 +32,7 @@ namespace GSkinner.Tests
             var initializer = new GTweenPropertyInitializer()
             {
                 AutoPlay = true,
-                DispatchEvents = true,
-                SuppressEvents = false
+                DispatchEvents = true
             };
             var tween = new GTween(_target, TweenDuration, _values, initializer);
             var reset = new AutoResetEvent(false);
@@ -88,8 +87,7 @@ namespace GSkinner.Tests
             var initializer = new GTweenPropertyInitializer()
             {
                 AutoPlay = true,
-                DispatchEvents = true,
-                SuppressEvents = false
+                DispatchEvents = true
             };
             var tween = new GTween(_target, TweenDuration, _values, initializer);
 
@@ -113,8 +111,7 @@ namespace GSkinner.Tests
             var initializer = new GTweenPropertyInitializer()
             {
                 AutoPlay = true,
-                DispatchEvents = true,
-                SuppressEvents = false
+                DispatchEvents = true
             };
             var tween = new GTween(_target, TweenDuration, _values, initializer);
 
@@ -140,8 +137,7 @@ namespace GSkinner.Tests
             {
                 AutoPlay = true,
                 Data = data,
-                DispatchEvents = true,
-                SuppressEvents = false
+                DispatchEvents = true
             };
             var tween = new GTween(_target, TweenDuration, _values, initializer);
 
@@ -167,8 +163,7 @@ namespace GSkinner.Tests
             {
                 AutoPlay = true,
                 Data = initData,
-                DispatchEvents = true,
-                SuppressEvents = false
+                DispatchEvents = true
             };
             var tween = new GTween(_target, TweenDuration, _values, initializer);
             tween.Data = data;
@@ -238,7 +233,6 @@ namespace GSkinner.Tests
             var initializer = new GTweenPropertyInitializer();
             initializer.AutoPlay = false;
             initializer.DispatchEvents = true;
-            initializer.SuppressEvents = false;
             initializer.Delay = TweenDuration;
 
             var tween = new GTween(_target, TweenDuration, _values, initializer);
@@ -265,8 +259,7 @@ namespace GSkinner.Tests
             var initializer = new GTweenPropertyInitializer()
             {
                 AutoPlay = false,
-                DispatchEvents = true,
-                SuppressEvents = false
+                DispatchEvents = true
             };
             var tween = new GTween(_target, TweenDuration, _values, initializer);
 
@@ -294,7 +287,6 @@ namespace GSkinner.Tests
         {
             var tween = new GTween(_target, TweenDuration, _values);
             tween.DispatchEvents = false;
-            tween.SuppressEvents = true;
 
             var eventFired = false;
             var reset = new AutoResetEvent(false);
@@ -319,7 +311,6 @@ namespace GSkinner.Tests
         {
             var tween = new GTween(_target, TweenDuration, _values);
             tween.DispatchEvents = true;
-            tween.SuppressEvents = false;
 
             var eventFired = false;
             var reset = new AutoResetEvent(false);
@@ -341,7 +332,6 @@ namespace GSkinner.Tests
         {
             var tween = new GTween(_target, TweenDuration, _values);
             tween.DispatchEvents = true;
-            tween.SuppressEvents = false;
 
             var reset = new AutoResetEvent(false);
             var timer = new Stopwatch();
@@ -374,7 +364,6 @@ namespace GSkinner.Tests
             var atStart = _target.Value;
             var tween = new GTween(_target, TweenDuration, _values);
             tween.DispatchEvents = true;
-            tween.SuppressEvents = false;
 
             var afterInit = 0d;
             var reset = new AutoResetEvent(false);
@@ -419,7 +408,6 @@ namespace GSkinner.Tests
         {
             var tween = new GTween(_target, TweenDuration, _values);
             tween.DispatchEvents = true;
-            tween.SuppressEvents = false;
 
             var eventFired = false;
             var reset = new AutoResetEvent(false);
@@ -442,16 +430,13 @@ namespace GSkinner.Tests
             var initializer = new GTweenPropertyInitializer();
             initializer.AutoPlay = false;
             initializer.DispatchEvents = false;
-            initializer.SuppressEvents = true;
 
             var secondValues = new Dictionary<string, double>() { { "Value", 100 } };
 
             var secondTween = new GTween(_target, TweenDuration, secondValues, initializer);
             secondTween.DispatchEvents = true;
-            secondTween.SuppressEvents = false;
 
             initializer.DispatchEvents = false;
-            initializer.SuppressEvents = true;
 
             var firstTween = new GTween(_target, TweenDuration, _values, initializer);
             firstTween.NextTween = secondTween;
@@ -519,7 +504,6 @@ namespace GSkinner.Tests
             var initializer = new GTweenPropertyInitializer();
             initializer.AutoPlay = false;
             initializer.DispatchEvents = true;
-            initializer.SuppressEvents = false;
             initializer.Reflect = true;
             initializer.RepeatCount = 2;
 
@@ -554,7 +538,6 @@ namespace GSkinner.Tests
             var initializer = new GTweenPropertyInitializer();
             initializer.AutoPlay = false;
             initializer.DispatchEvents = true;
-            initializer.SuppressEvents = false;
             initializer.RepeatCount = 2;
 
             var tween = new GTween(_target, TweenDuration, _values, initializer);
@@ -576,55 +559,6 @@ namespace GSkinner.Tests
             tween.Completed -= handler;
 
             Assert.AreEqual(tween.RepeatCount, counter);
-        }
-
-        /// <summary>
-        /// The value of SupressEvents is set to false by default.
-        /// </summary>
-        [TestMethod]
-        public void TestSupressEventsDisabled()
-        {
-            var tween = new GTween(_target, TweenDuration, _values);
-            tween.SuppressEvents = true;
-
-            var eventFired = false;
-            var reset = new AutoResetEvent(false);
-            EventHandler<GTweenEventArgs> handler = (s, e) =>
-            {
-                eventFired = true;
-                reset.Set();
-            };
-            tween.Completed += handler;
-            tween.Paused = false;
-            reset.WaitOne(WaitDuration);
-            tween.Completed -= handler;
-
-            Assert.IsFalse(eventFired);
-        }
-
-        /// <summary>
-        /// Explicitly change the value of SupressEvents to false.
-        /// </summary>
-        [TestMethod]
-        public void TestSupressEventsEnabled()
-        {
-            var tween = new GTween(_target, TweenDuration, _values);
-            tween.DispatchEvents = true;
-            tween.SuppressEvents = false;
-
-            var eventFired = false;
-            var reset = new AutoResetEvent(false);
-            EventHandler<GTweenEventArgs> handler = (s, e) =>
-            {
-                eventFired = true;
-                reset.Set();
-            };
-            tween.Completed += handler;
-            tween.Paused = false;
-            reset.WaitOne(WaitDuration);
-            tween.Completed -= handler;
-
-            Assert.IsTrue(eventFired);
         }
     }
 }
