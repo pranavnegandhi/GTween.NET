@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace GSkinner.Helpers
 {
@@ -13,15 +15,6 @@ namespace GSkinner.Helpers
     /// </summary>
     public static class PropertyExtensions
     {
-        public static void SetValue<TValue>(this object target, string name, TValue value)
-        {
-            var property = target.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
-            if (null != property && property.CanWrite && property.PropertyType == value.GetType())
-            {
-                property.SetValue(target, value, null);
-            }
-        }
-
         public static TValue GetValue<TValue>(this object target, string name)
         {
             var property = target.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
@@ -31,6 +24,21 @@ namespace GSkinner.Helpers
             }
 
             return default(TValue);
+        }
+
+        public static Action<object, double> GenerateSetPropertyAction(this Type type, string property)
+        {
+            var pi = type.GetProperty(property, BindingFlags.Instance | BindingFlags.Public);
+            var mi = pi.GetSetMethod();
+
+            var targetParam = Expression.Parameter(typeof(object), "instance");
+            var valueParam = Expression.Parameter(typeof(double), "value");
+
+            var instance = Expression.Convert(targetParam, type);
+            var value = Expression.Convert(valueParam, pi.PropertyType);
+            var callExpr = Expression.Call(instance, mi, value);
+            
+            return Expression.Lambda<Action<object, double>>(callExpr, targetParam, valueParam).Compile();
         }
     }
 }

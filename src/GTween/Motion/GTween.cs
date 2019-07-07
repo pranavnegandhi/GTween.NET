@@ -26,6 +26,8 @@ namespace GSkinner.Motion
 
         public delegate double Easer(double a, double b, double c, double d);
 
+        private Type _targetType;
+
         private bool _initialized;
 
         private IDictionary<string, double> _values;
@@ -53,6 +55,8 @@ namespace GSkinner.Motion
         private static DateTime _processStartTime = Process.GetCurrentProcess().StartTime.ToUniversalTime();
 
         private static bool _pauseAll;
+
+        private static IDictionary<Type, IDictionary<string, Action<object, double>>> _setterCache = new Dictionary<Type, IDictionary<string, Action<object, double>>>();
 
         static GTween()
         {
@@ -93,6 +97,27 @@ namespace GSkinner.Motion
             if (Duration == 0 && Delay == 0 && AutoPlay)
             {
                 Position = 0;
+            }
+
+            if (null != target)
+            {
+                _targetType = target.GetType();
+                IDictionary<string, Action<object, double>> setters;
+
+                if (!_setterCache.TryGetValue(_targetType, out setters))
+                {
+                    setters = _setterCache[_targetType] = new Dictionary<string, Action<object, double>>();
+                }
+
+                foreach (var v in values)
+                {
+                    var propertyName = v.Key;
+                    if (!setters.ContainsKey(propertyName))
+                    {
+                        var action = _targetType.GenerateSetPropertyAction(propertyName);
+                        setters[propertyName] = action;
+                    }
+                }
             }
         }
 
@@ -364,14 +389,21 @@ namespace GSkinner.Motion
                         Initialize();
                     }
 
-                    foreach (var item in _values)
-                    {
-                        var initVal = _initValues[item.Key];
-                        var rangeVal = _rangeValues[item.Key];
-                        var val = initVal + rangeVal * Ratio;
+                    IDictionary<string, Action<object, double>> setters;
+                    if (_setterCache.TryGetValue(_targetType, out setters))
 
-                        Target.SetValue(item.Key, val);
-                    }
+                        foreach (var item in _values)
+                        {
+                            var initVal = _initValues[item.Key];
+                            var rangeVal = _rangeValues[item.Key];
+                            var val = initVal + rangeVal * Ratio;
+
+                            Action<object, double> s;
+                            if (setters.TryGetValue(item.Key, out s))
+                            {
+                                s(Target, val);
+                            }
+                        }
                 }
 
                 if (!SuppressEvents)
