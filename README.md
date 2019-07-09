@@ -139,10 +139,6 @@ Indicates whether the tween should use the reflect mode when repeating. If `Refl
 
 The number of times this tween will run. If 1, the tween will only run once. If 2 or more, the tween will repeat that many times. If 0, the tween will repeat forever.
 
-### SuppressEvents
-
-If true, events/callbacks will not be called. As well as allowing for more control over events, and providing flexibility for extension, this results in a slight performance increase, particularly if `UseCallbacks` is false.
-
 ### Target
 
 The target object to tween. This can be any kind of object. You can retarget a tween at any time, but changing the target in mid-tween may result in unusual behaviour.
