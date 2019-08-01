@@ -388,7 +388,7 @@ namespace GSkinner.Motion
                         Initialize();
                     }
 
-                    IDictionary<string, Action<object, double>> setters;
+                    IDictionary<string, Action<object, double>> setters = new Dictionary<string, Action<object, double>>();
                     if (_setterCache.TryGetValue(_targetType, out setters))
 
                         foreach (var item in _values)
