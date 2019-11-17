@@ -136,7 +136,7 @@ namespace EasingDemos
                     yFrom = Math.Min(yFrom, _maxHeight);
 
                     var xTo = xFrom;
-                    xTo += _maxWidth / ((float)tween.Duration * 1000 / 40);
+                    xTo += _maxWidth / ((float)tween.Duration * 1000 / _refresh.Interval);
                     xTo = Math.Max(xTo, 0.0f);
                     xTo = Math.Min(xTo, _maxWidth);
 
