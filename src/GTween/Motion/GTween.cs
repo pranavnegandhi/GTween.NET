@@ -381,16 +381,17 @@ namespace GSkinner.Motion
                 }
 
                 Ratio = (Duration == 0 && _position >= 0) ? 1.0 : Ease(CalculatedPosition / Duration, 0, 1, 1);
-                if ((Target != null) && (_position >= 0 || PositionOld >= 0) && CalculatedPosition != CalculatedPositionOld)
+                if ((Target != null) && _targetType != null && (_position >= 0 || PositionOld >= 0) && CalculatedPosition != CalculatedPositionOld)
                 {
                     if (!_initialized)
                     {
                         Initialize();
                     }
 
-                    IDictionary<string, Action<object, double>> setters = new Dictionary<string, Action<object, double>>();
-                    if (_setterCache.TryGetValue(_targetType, out setters))
+                    IDictionary<string, Action<object, double>> setters;
 
+                    if (_setterCache.TryGetValue(_targetType, out setters))
+                    {
                         foreach (var item in _values)
                         {
                             var initVal = _initValues[item.Key];
@@ -403,6 +404,7 @@ namespace GSkinner.Motion
                                 s(Target, val);
                             }
                         }
+                    }
                 }
 
                 if (DispatchEvents)
