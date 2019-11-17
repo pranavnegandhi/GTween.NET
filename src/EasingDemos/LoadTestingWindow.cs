@@ -100,11 +100,6 @@ namespace EasingDemos
             finally
             {
                 _counter.Signal();
-
-                if (_refresh.Enabled && _counter.IsSet)
-                {
-                    _refresh.Enabled = false;
-                }
             }
         }
 
@@ -157,6 +152,13 @@ namespace EasingDemos
                     }
                     catch (InvalidOperationException)
                     {
+                    }
+                    finally
+                    {
+                        if (_refresh.Enabled && _counter.IsSet)
+                        {
+                            _refresh.Enabled = false;
+                        }
                     }
                 }
             }
